@@ -32,5 +32,27 @@ router.get('/all', async (req, res) => {
     res.status(500).send({ msg: 'Failed to retrieve users', error: error.message });
   }
 });
+router.delete('/:_id',async(req,res)=> {
+   try {
+      const {_id}=req.params;
+      await Contact.findOneAndDelete({_id}) 
+      res.status(200).send({msg:'user deleted'})
+   
+   } catch(error){
+   res.status(400).send({msg:'can not delete users'})
+   }
+   
+   })  
+
+router.put('/:_id',async(req,res)=> {
+   try {
+      const {_id}=req.params;
+      const updateUser= await Contact.updateone({_id},{$set:{...req}})
+      res.status(200).send({msg:'user updated'}) 
+   } catch(error){
+       res.status(400).send({msg:'can not update users'})
+       }
+       
+       })  
 
 module.exports = router;
